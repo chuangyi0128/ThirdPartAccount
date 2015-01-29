@@ -1,0 +1,11 @@
+source 'https://github.com/CocoaPods/Specs.git'
+
+target 'ThirdPartAccount', :exclusive => true do
+  pod "ThirdPartAccount", :path => "../"
+end
+
+target 'Tests', :exclusive => true do
+  pod "ThirdPartAccount", :path => "../"
+
+  
+end
