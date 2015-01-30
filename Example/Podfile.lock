@@ -1,0 +1,18 @@
+PODS:
+  - QQSDK (2.3.1)
+  - ThirdPartAccount (0.1.0):
+    - QQSDK (~> 2.3.1)
+
+DEPENDENCIES:
+  - QQSDK (~> 2.3.1)
+  - ThirdPartAccount (from `../`)
+
+EXTERNAL SOURCES:
+  ThirdPartAccount:
+    :path: ../
+
+SPEC CHECKSUMS:
+  QQSDK: f2f59420e2820c1ba942d55bdc0469b394d8cba7
+  ThirdPartAccount: 94426f9115a7d8724d3691183617ba5d0ab891a7
+
+COCOAPODS: 0.34.4

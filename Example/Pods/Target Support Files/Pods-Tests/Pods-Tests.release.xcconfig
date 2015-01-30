@@ -1,0 +1,7 @@
+FRAMEWORK_SEARCH_PATHS = "$(PODS_ROOT)/QQSDK/QQSDK"
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/QQSDK" "${PODS_ROOT}/Headers/Public/ThirdPartAccount"
+OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/QQSDK" -isystem "${PODS_ROOT}/Headers/Public/ThirdPartAccount"
+OTHER_LDFLAGS = -ObjC -fobjc-arc -l"Pods-Tests-QQSDK" -l"Pods-Tests-ThirdPartAccount" -l"iconv" -l"sqlite3" -l"stdc++" -l"z" -framework "CoreGraphics" -framework "CoreTelephony" -framework "Security" -framework "SystemConfiguration" -framework "TencentOpenAPI"
+OTHER_LIBTOOLFLAGS = $(OTHER_LDFLAGS)
+PODS_ROOT = ${SRCROOT}/Pods
