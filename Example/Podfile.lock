@@ -1,10 +1,16 @@
 PODS:
-  - QQSDK (2.3.1)
+  - ERActionSheet (1.0.1)
+  - QQSDK (2.8.1)
   - ThirdPartAccount (0.1.0):
-    - QQSDK (~> 2.3.1)
+    - ERActionSheet
+    - QQSDK
+    - UICategory
+    - UIImage-Resize
+  - UICategory (1.0.0)
+  - UIImage-Resize (1.0.1)
 
 DEPENDENCIES:
-  - QQSDK (~> 2.3.1)
+  - QQSDK
   - ThirdPartAccount (from `../`)
 
 EXTERNAL SOURCES:
@@ -12,7 +18,10 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  QQSDK: f2f59420e2820c1ba942d55bdc0469b394d8cba7
-  ThirdPartAccount: 94426f9115a7d8724d3691183617ba5d0ab891a7
+  ERActionSheet: a55f469c7d42405ab21940fb3130663305bd2063
+  QQSDK: 51223613be254330b17f137e9a0eda0d89324842
+  ThirdPartAccount: 22e6053416cf7472acd0d65455090b605314b8cb
+  UICategory: 72ff41036aa67c659ea65cae54fc68098f88b965
+  UIImage-Resize: fc57263eed2cd98f74e5ba4848bedae979a0bdf0
 
 COCOAPODS: 0.34.4

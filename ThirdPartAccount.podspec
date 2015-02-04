@@ -21,5 +21,11 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.source_files = 'ThirdPartAccount'
-  s.dependency 'QQSDK', '~> 2.3.1'
+  s.resources = 'ThirdPartAccount/TPAAcoutSerivece.bundle'
+  s.frameworks = 'MessageUI'
+
+  s.dependency 'QQSDK'
+  s.dependency 'UIImage-Resize'
+  s.dependency 'ERActionSheet'
+  s.dependency 'UICategory'
 end

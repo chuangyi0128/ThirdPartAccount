@@ -24,7 +24,6 @@
 		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
 		A64EADA3AF3622BEAD85F7CE /* libPods-ThirdPartAccount.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A270F259D51EBFDE20D31AD /* libPods-ThirdPartAccount.a */; };
 		D7848BE09A7A7CAECD1CAE64 /* libPods-Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 094C602B7D470A4B5ECDA304 /* libPods-Tests.a */; };
-		FB36218BC91FC739B07A72E3 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B5DBB604E27404D5D32BE599 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,7 +79,6 @@
 				6003F592195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F58E195388D20070C39A /* Foundation.framework in Frameworks */,
 				A64EADA3AF3622BEAD85F7CE /* libPods-ThirdPartAccount.a in Frameworks */,
-				FB36218BC91FC739B07A72E3 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -501,12 +499,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4E13E43C4FD0C3119B1512A9 /* Pods-ThirdPartAccount.debug.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ThirdPartAccount/ThirdPartAccount-Prefix.pch";
 				INFOPLIST_FILE = "ThirdPartAccount/ThirdPartAccount-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "6d8e3a73-776f-462c-bd19-03858002011a";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -515,12 +515,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8164B4CB33AB020994A075A0 /* Pods-ThirdPartAccount.release.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ThirdPartAccount/ThirdPartAccount-Prefix.pch";
 				INFOPLIST_FILE = "ThirdPartAccount/ThirdPartAccount-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "6d8e3a73-776f-462c-bd19-03858002011a";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

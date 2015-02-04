@@ -13,6 +13,7 @@
 extern NSString * const TPANotificationQQAccountDidLogin;
 extern NSString * const TPANotificationQQAccountDidLogout;
 extern NSString * const TPANotificationQQAccountDidGetUserInfo;
+extern NSString * const TPANotificationShareToQQFinished;
 
 // PropertyKeys
 extern NSString * const TPAQQAccountAccessTokenKey;
@@ -22,7 +23,10 @@ extern NSString * const TPAQQAccountUserNickNameKey;
 extern NSString * const TPAQQAccountUserAvatarLinkKey;
 
 
-@interface TPAQQAccountService : NSObject
+@interface TPAQQAccountService : NSObject <TPAOAuthProtocal, TPAShareProtocal>
+
+/** QQ已经授权登录 */
+@property (nonatomic, assign, readonly) BOOL isAuthorized;
 
 /** Access Token凭证，用于后续访问各开放接口 */
 @property (nonatomic, copy, readonly) NSString *accessToken;
@@ -81,5 +85,49 @@ extern NSString * const TPAQQAccountUserAvatarLinkKey;
  *  若重新登录失败则放弃获取用户信息
  */
 - (void)getQQUserInfo;
+
+/**
+ *  QQ好友链接类型分享，可以附带一张预览图和多张大图
+ *  @param  urlStr      分享的url链接
+ *  @param  title       标题
+ *  @param  desc        描述
+ *  @param  prevImage   预览图，最大1MB
+ */
+- (void)shareToFriendsWithURL:(NSString *)urlStr
+                        title:(NSString *)title
+                  description:(NSString *)desc
+                 previewImage:(UIImage *)prevImage;
+
+/**
+ *  QQ好友图片类型分享，可以附带一张预览图和多张大图
+ *  @param  image       分享的大图
+ *  @param  title       标题
+ *  @param  desc        描述
+ */
+- (void)shareToFriendsWithImage:(UIImage *)image
+                          title:(NSString *)title
+                    description:(NSString *)desc;
+
+/**
+ *  QQ空间链接类型分享，可以附带一张预览图和多张大图
+ *  @param  urlStr      分享的url链接
+ *  @param  title       标题
+ *  @param  desc        描述
+ *  @param  prevImage   预览图，最大1MB
+ */
+- (void)shareToQZoneWithURL:(NSString *)urlStr
+                      title:(NSString *)title
+                description:(NSString *)desc
+               previewImage:(UIImage *)prevImage;
+
+/**
+ *  QQ空间图片类型分享，可以附带一张预览图和多张大图
+ *  @param  image       分享的大图
+ *  @param  title       标题
+ *  @param  desc        描述
+ */
+- (void)shareToQZoneWithImage:(UIImage *)image
+                        title:(NSString *)title
+                  description:(NSString *)desc;
 
 @end

@@ -26,7 +26,7 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>tencent</string>
+			<string>Tencent</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>tencent222222</string>
