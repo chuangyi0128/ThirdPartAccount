@@ -92,7 +92,7 @@
         TPAShareContentItem *contentItem = [TPAShareContentItem new];
         contentItem.title = @"ThirdPartAccount";
         contentItem.content = @"Test content 这是测试内容\n是测试内容～";
-        contentItem.linkUrlStr = @"http://cp.163.com";
+//        contentItem.linkUrlStr = @"http://cp.163.com";
         contentItem.image = self.testImage;
         return contentItem;
     }];

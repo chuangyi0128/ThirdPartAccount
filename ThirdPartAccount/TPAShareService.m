@@ -8,9 +8,10 @@
 
 #import "TPAShareService.h"
 #import <MessageUI/MessageUI.h>
-#import "TPAQQAccountService.h"
-#import "ERActionSheet.h"
 #import "UIViewController+TopmostViewController.h"
+#import "ERActionSheet.h"
+#import "TPAQQAccountService.h"
+#import "TPAWeChatAccountService.h"
 
 #define TPABundleImage(imageName) [UIImage imageNamed:[NSString stringWithFormat:@"TPAAcoutSerivece.bundle/%@", imageName]]
 
@@ -26,8 +27,9 @@
 #pragma mark - TPAShareService
 
 @interface TPAShareService () <ERActionSheetDelegate, MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate>
-@property (nonatomic, strong) TPAQQAccountService *qqService;
 @property (nonatomic, strong) TPAShareContentBlock contentBlock;
+@property (nonatomic, strong) TPAQQAccountService *qqService;
+@property (nonatomic, strong) TPAWeChatAccountService *weChatService;
 @end
 
 @implementation TPAShareService
@@ -40,6 +42,7 @@
     self = [super init];
     if (self) {
         self.qqService = [TPAQQAccountService service];
+        self.weChatService = [TPAWeChatAccountService service];
     }
     return self;
 }
@@ -90,6 +93,10 @@
         enabledSharePaths |= TPAShareToQQFriend;
         enabledSharePaths |= TPAShareToQZone;
     }
+    if ([self.weChatService isShareEnable]) {
+        enabledSharePaths |= TPAShareToWeChatFriend;
+        enabledSharePaths |= TPAShareToWeChatMoment;
+    }
     if ([MFMessageComposeViewController canSendText]) {
         enabledSharePaths |= TPAShareToSMS;
     }
@@ -128,11 +135,21 @@
         return;
     }
     if (shareTo & TPAShareToWeChatFriend) {
-        
+        TPAShareContentItem *contentItem = self.contentBlock(TPAShareToWeChatFriend);
+        if (contentItem.linkUrlStr) {
+            [self.weChatService shareToWeChatFriendsWithURL:contentItem.linkUrlStr title:contentItem.title description:contentItem.content previewImage:contentItem.image];
+        } else {
+            [self.weChatService shareToWeChatFriendsWithImage:contentItem.image title:contentItem.title description:contentItem.content];
+        }
         return;
     }
     if (shareTo & TPAShareToWeChatMoment) {
-        
+        TPAShareContentItem *contentItem = self.contentBlock(TPAShareToWeChatMoment);
+        if (contentItem.linkUrlStr) {
+            [self.weChatService shareToWeChatMomentWithURL:contentItem.linkUrlStr title:contentItem.title description:contentItem.content previewImage:contentItem.image];
+        } else {
+            [self.weChatService shareToWeChatMomentWithImage:contentItem.image title:contentItem.title description:contentItem.content];
+        }
         return;
     }
     if (shareTo & TPAShareToYiXinFriend) {

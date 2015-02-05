@@ -99,7 +99,7 @@ extern NSString * const TPAQQAccountUserAvatarLinkKey;
                  previewImage:(UIImage *)prevImage;
 
 /**
- *  QQ好友图片类型分享，可以附带一张预览图和多张大图
+ *  QQ好友图片类型分享(无图片时分享文字)，可以附带一张预览图和多张大图
  *  @param  image       分享的大图
  *  @param  title       标题
  *  @param  desc        描述
@@ -121,7 +121,7 @@ extern NSString * const TPAQQAccountUserAvatarLinkKey;
                previewImage:(UIImage *)prevImage;
 
 /**
- *  QQ空间图片类型分享，可以附带一张预览图和多张大图
+ *  QQ空间图片类型分享(无图片时分享文字)，可以附带一张预览图和多张大图
  *  @param  image       分享的大图
  *  @param  title       标题
  *  @param  desc        描述

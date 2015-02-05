@@ -31,6 +31,7 @@ static NSString *appId;
 
 
 @interface TPAQQAccountService () <TencentSessionDelegate>
+@property (nonatomic, assign) dispatch_queue_t taskQueue;
 @property (nonatomic, strong) TencentOAuth *oauth;
 @property (nonatomic, strong) NSArray *permissionsArray;
 @end
@@ -67,6 +68,11 @@ static NSString *appId;
     } else {
         return nil;
     }
+}
+
+- (void)dealloc
+{
+    dispatch_release(self.taskQueue);
 }
 
 + (BOOL)canHandleOpenURL:(NSURL *)url
@@ -118,43 +124,51 @@ static NSString *appId;
 
 - (BOOL)isShareEnable
 {
-    return [QQApiInterface isQQSupportApi] && ([TencentOAuth iphoneQQInstalled] || [TencentOAuth iphoneQZoneInstalled]);
+    return YES;
 }
 
 - (void)shareToFriendsWithURL:(NSString *)urlStr title:(NSString *)title description:(NSString *)desc previewImage:(UIImage *)prevImage
 {
-    SendMessageToQQReq *reqest = [self requestWithURL:urlStr title:title description:desc previewImage:prevImage];
-    if (reqest) {
-        QQApiSendResultCode code = [QQApiInterface sendReq:reqest];
-        [self proceedShareResult:code];
-    }
+    dispatch_async(self.taskQueue, ^{
+        SendMessageToQQReq *reqest = [self requestWithURL:urlStr title:title description:desc previewImage:prevImage];
+        if (reqest) {
+            QQApiSendResultCode code = [QQApiInterface sendReq:reqest];
+            [self proceedShareResult:code];
+        }
+    });
 }
 
 - (void)shareToFriendsWithImage:(UIImage *)image title:(NSString *)title description:(NSString *)desc
 {
-    SendMessageToQQReq *reqest = [self requestWithImage:image title:title description:desc];
-    if (reqest) {
-        QQApiSendResultCode code = [QQApiInterface sendReq:reqest];
-        [self proceedShareResult:code];
-    }
+    dispatch_async(self.taskQueue, ^{
+        SendMessageToQQReq *reqest = [self requestWithImage:image title:title description:desc];
+        if (reqest) {
+            QQApiSendResultCode code = [QQApiInterface sendReq:reqest];
+            [self proceedShareResult:code];
+        }
+    });
 }
 
 - (void)shareToQZoneWithURL:(NSString *)urlStr title:(NSString *)title description:(NSString *)desc previewImage:(UIImage *)prevImage
 {
-    SendMessageToQQReq *reqest = [self requestWithURL:urlStr title:title description:desc previewImage:prevImage];
-    if (reqest) {
-        QQApiSendResultCode code = [QQApiInterface SendReqToQZone:reqest];
-        [self proceedShareResult:code];
-    }
+    dispatch_async(self.taskQueue, ^{
+        SendMessageToQQReq *reqest = [self requestWithURL:urlStr title:title description:desc previewImage:prevImage];
+        if (reqest) {
+            QQApiSendResultCode code = [QQApiInterface SendReqToQZone:reqest];
+            [self proceedShareResult:code];
+        }
+    });
 }
 
 - (void)shareToQZoneWithImage:(UIImage *)image title:(NSString *)title description:(NSString *)desc
 {
-    SendMessageToQQReq *reqest = [self requestWithImage:image title:title description:desc];
-    if (reqest) {
-        QQApiSendResultCode code = [QQApiInterface SendReqToQZone:reqest];
-        [self proceedShareResult:code];
-    }
+    dispatch_async(self.taskQueue, ^{
+        SendMessageToQQReq *reqest = [self requestWithImage:image title:title description:desc];
+        if (reqest) {
+            QQApiSendResultCode code = [QQApiInterface SendReqToQZone:reqest];
+            [self proceedShareResult:code];
+        }
+    });
 }
 
 
@@ -210,14 +224,16 @@ static NSString *appId;
     
     QQApiObject *msgObject = nil;
     if (image) {
-        image = [image resizedImageToFitInSize:CGSizeMake(1500, 1500) scaleIfSmaller:NO];
         NSData *imageData = UIImageJPEGRepresentation(image, 1.0f);
-        NSData *prevImageData = [NSData dataWithData:imageData];
+        UIImage *prevImage = [image resizedImageToFitInSize:CGSizeMake(500, 500) scaleIfSmaller:NO];
+        NSData *prevImageData = UIImageJPEGRepresentation(prevImage, 1.0f);
         
         for (int i = 1; imageData.length > 1024 * 1024 * 4.9f; i++) {
-            imageData = UIImageJPEGRepresentation(image, 1.0f - 0.2f * i);
+            image = [image resizedImageToFitInSize:CGSizeMake(image.size.width * 0.8f, image.size.height * 0.8f) scaleIfSmaller:NO];
+            imageData = UIImageJPEGRepresentation(image, MAX(1.0f - 0.2f * i, 0.5f));
         }
         for (int i = 1; prevImageData.length > 1024 * 1024 * 0.9f; i++) {
+            prevImage = [prevImage resizedImageToFitInSize:CGSizeMake(prevImage.size.width * 0.8f, prevImage.size.height * 0.8f) scaleIfSmaller:NO];
             prevImageData = UIImageJPEGRepresentation(image, 1.0f - 0.2f * i);
         }
         

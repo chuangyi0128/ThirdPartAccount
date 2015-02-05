@@ -121,7 +121,7 @@ extern NSString * const TPAWeChatAccountUserAvatarLinkKey;
                  previewImage:(UIImage *)prevImage;
 
 /**
- *  WeChat好友图片类型分享，可以附带一张预览图和多张大图
+ *  WeChat好友图片类型分享(无图片时分享文字)，可以附带一张预览图和多张大图
  *  @param  image       分享的大图
  *  @param  title       标题
  *  @param  desc        描述
@@ -143,7 +143,7 @@ extern NSString * const TPAWeChatAccountUserAvatarLinkKey;
                previewImage:(UIImage *)prevImage;
 
 /**
- *  WeChat朋友圈图片类型分享，可以附带一张预览图和多张大图
+ *  WeChat朋友圈图片类型分享(无图片时分享文字)，可以附带一张预览图和多张大图
  *  @param  image       分享的大图
  *  @param  title       标题
  *  @param  desc        描述

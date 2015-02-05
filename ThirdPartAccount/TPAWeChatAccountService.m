@@ -8,6 +8,8 @@
 
 #import "TPAWeChatAccountService.h"
 #import "UIViewController+TopmostViewController.h"
+#import "UIImage+Crop.h"
+#import "UIImage+Resize.h"
 
 
 // NotificationKeys
@@ -171,22 +173,38 @@ static NSString *secret;
 
 - (void)shareToWeChatFriendsWithURL:(NSString *)urlStr title:(NSString *)title description:(NSString *)desc previewImage:(UIImage *)prevImage
 {
-    
+    dispatch_async(self.taskQueue, ^{
+        SendMessageToWXReq *request = [self requestWithURL:urlStr title:title description:desc previewImage:prevImage];
+        request.scene = WXSceneSession;
+        [WXApi sendReq:request];
+    });
 }
 
 - (void)shareToWeChatFriendsWithImage:(UIImage *)image title:(NSString *)title description:(NSString *)desc
 {
-    
+    dispatch_async(self.taskQueue, ^{
+        SendMessageToWXReq *request = [self requestWithImage:image title:title description:desc];
+        request.scene = WXSceneSession;
+        [WXApi sendReq:request];
+    });
 }
 
 - (void)shareToWeChatMomentWithURL:(NSString *)urlStr title:(NSString *)title description:(NSString *)desc previewImage:(UIImage *)prevImage
 {
-    
+    dispatch_async(self.taskQueue, ^{
+        SendMessageToWXReq *request = [self requestWithURL:urlStr title:title description:desc previewImage:prevImage];
+        request.scene = WXSceneTimeline;
+        [WXApi sendReq:request];
+    });
 }
 
 - (void)shareToWeChatMomentWithImage:(UIImage *)image title:(NSString *)title description:(NSString *)desc
-{
-    
+    {
+        dispatch_async(self.taskQueue, ^{
+            SendMessageToWXReq *request = [self requestWithImage:image title:title description:desc];
+            request.scene = WXSceneTimeline;
+            [WXApi sendReq:request];
+        });
 }
 
 
@@ -270,8 +288,6 @@ static NSString *secret;
 {
     SendAuthReq* req = [[SendAuthReq alloc] init];
     req.scope = @"snsapi_message,post_timeline,snsapi_userinfo";
-    req.state = nil;
-    
     [WXApi sendAuthReq:req viewController:[UIViewController topmostViewController] delegate:self];
 }
 
@@ -308,6 +324,85 @@ static NSString *secret;
     });
 }
 
+- (SendMessageToWXReq *)requestWithURL:(NSString *)urlStr title:(NSString *)title description:(NSString *)desc previewImage:(UIImage *)prevImage
+{
+    if (urlStr.length == 0) {
+        return nil;
+    }
+    if (title.length == 0) {
+        title = @"快来看看我的分享";
+    }
+    
+    NSData *prevImageData = nil;
+    if (prevImage) {
+        prevImage = [prevImage cropToSquareInCenter];
+        prevImage = [prevImage resizedImageToSize:CGSizeMake(300, 300)];
+        prevImageData = UIImageJPEGRepresentation(prevImage, 1.0f);
+        
+        for (int i = 1; prevImageData.length > 1024 * 30; i++) { // max:30KB
+            prevImageData = UIImageJPEGRepresentation(prevImage, 1.0f - 0.2f * i);
+        }
+    }
+    
+    WXMediaMessage *message = [WXMediaMessage message];
+    message.title = title;
+    message.description = desc;
+    [message setThumbImage:[UIImage imageWithData:prevImageData]];
+    
+    WXWebpageObject *ext = [WXWebpageObject object];
+    ext.webpageUrl = urlStr;
+    message.mediaObject = ext;
+    
+    SendMessageToWXReq* request = [[SendMessageToWXReq alloc] init];
+    request.bText = NO;
+    request.message = message;
+    
+    return request;
+}
+
+- (SendMessageToWXReq *)requestWithImage:(UIImage *)image title:(NSString *)title description:(NSString *)desc
+{
+    if (image == nil && title.length == 0 && desc.length == 0) {
+        return nil;
+    }
+    
+    SendMessageToWXReq *request = [[SendMessageToWXReq alloc] init];
+    
+    if (image) {
+        NSData *imageData = UIImageJPEGRepresentation(image, 1.0f);
+        UIImage *thumbImage = [image resizedImageToFitInSize:CGSizeMake(500, 500) scaleIfSmaller:NO];
+        NSData *thumbImageData = UIImageJPEGRepresentation(thumbImage, 1.0f);
+
+        for (int i = 1; imageData.length > 1024 * 1024 * 9.9f; i++) { // max:10MB
+            image = [image resizedImageToFitInSize:CGSizeMake(image.size.width * 0.8f, image.size.height * 0.8f) scaleIfSmaller:NO];
+            imageData = UIImageJPEGRepresentation(image, MAX(1.0f - 0.2f * i, 0.5f));
+        }
+        for (int i = 1; thumbImageData.length > 1024 * 30; i++) { // max:32KB
+            thumbImage = [thumbImage resizedImageToFitInSize:CGSizeMake(thumbImage.size.width * 0.8f, thumbImage.size.height * 0.8f) scaleIfSmaller:NO];
+            thumbImageData = UIImageJPEGRepresentation(thumbImage, 1.0f - 0.2f * i);
+        }
+        WXImageObject *ext = [WXImageObject object];
+        ext.imageData = imageData;
+        
+        WXMediaMessage *message = [WXMediaMessage message];
+        message.mediaObject = ext;
+        [message setThumbImage:[UIImage imageWithData:thumbImageData]];
+        message.title = title;
+        message.description = desc;
+        request.message = message;
+        request.bText = NO;
+    } else {
+        if (desc.length > 0) {
+            request.text = desc;
+        } else {
+            request.text = title;
+        }
+        request.bText = YES;
+    }
+    
+    return request;
+}
+
 
 #pragma mark - WXApiDelegate
 
@@ -333,6 +428,17 @@ static NSString *secret;
             case -2: // 用户取消授权
             default:
                 break;
+        }
+    } else if([resp isKindOfClass:[SendMessageToWXResp class]]) {
+        SendMessageToWXResp *sendMsgResp = (SendMessageToWXResp*)resp;
+        if (sendMsgResp.errCode == 0) {
+            NSDictionary *userInfo = @{TPASucceedFlagKey : @(YES)};
+            [self notify:TPANotificationShareToWeChatFinished withUserInfo:userInfo];
+        } else {
+            NSError *error = [NSError errorWithDomain:@"TPAWeChatAccountService" code:0 userInfo:@{NSLocalizedDescriptionKey:@"微信分享失败"}];
+            NSDictionary *userInfo = @{TPASucceedFlagKey : @(NO),
+                                       TPAErrorKey : error};
+            [self notify:TPANotificationShareToWeChatFinished withUserInfo:userInfo];
         }
     }
 }
