@@ -50,6 +50,8 @@
         return YES;
     } else if ([TPAWeChatAccountService handleOpenURL:url delegate:[TPASingletonManager sharedWeChatService]]) {
         return YES;
+    } else if ([TPASinaWeiboAccountService handleOpenURL:url delegate:[TPASingletonManager sharedSinaWeiboService]]) {
+        return YES;
     }
     return NO;
 }
@@ -59,6 +61,8 @@
     if ([TPAQQAccountService handleOpenURL:url]) {
         return YES;
     } else if ([TPAWeChatAccountService handleOpenURL:url delegate:[TPASingletonManager sharedWeChatService]]) {
+        return YES;
+    } else if ([TPASinaWeiboAccountService handleOpenURL:url delegate:[TPASingletonManager sharedSinaWeiboService]]) {
         return YES;
     }
     return NO;

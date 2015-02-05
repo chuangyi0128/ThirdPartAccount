@@ -1,5 +1,5 @@
 #include "Pods-Tests-ERActionSheet.xcconfig"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Build" "${PODS_ROOT}/Headers/Build/ERActionSheet" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/ERActionSheet" "${PODS_ROOT}/Headers/Public/QQSDK" "${PODS_ROOT}/Headers/Public/ThirdPartAccount" "${PODS_ROOT}/Headers/Public/UICategory" "${PODS_ROOT}/Headers/Public/UIImage-Resize" "${PODS_ROOT}/Headers/Public/WeChatSDK"
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Build" "${PODS_ROOT}/Headers/Build/ERActionSheet" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/ERActionSheet" "${PODS_ROOT}/Headers/Public/QQSDK" "${PODS_ROOT}/Headers/Public/SinaWeiboSDK" "${PODS_ROOT}/Headers/Public/ThirdPartAccount" "${PODS_ROOT}/Headers/Public/UICategory" "${PODS_ROOT}/Headers/Public/UIImage-Resize" "${PODS_ROOT}/Headers/Public/WeChatSDK"
 OTHER_LDFLAGS = -ObjC
 PODS_ROOT = ${SRCROOT}

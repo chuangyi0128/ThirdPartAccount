@@ -42,6 +42,7 @@
 		2158A6A0349EB514F63E5912 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		443F4E6C1A831EA300B01D18 /* TPASingletonManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPASingletonManager.h; sourceTree = "<group>"; };
 		443F4E6D1A831EA300B01D18 /* TPASingletonManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPASingletonManager.m; sourceTree = "<group>"; };
+		443F4E6F1A83B6BF00B01D18 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		4E13E43C4FD0C3119B1512A9 /* Pods-ThirdPartAccount.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ThirdPartAccount.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ThirdPartAccount/Pods-ThirdPartAccount.debug.xcconfig"; sourceTree = "<group>"; };
 		56B872400801F2EA11492190 /* ThirdPartAccount.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = ThirdPartAccount.podspec; path = ../ThirdPartAccount.podspec; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* ThirdPartAccount.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ThirdPartAccount.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -134,6 +135,7 @@
 		6003F58C195388D20070C39A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				443F4E6F1A83B6BF00B01D18 /* ImageIO.framework */,
 				6003F58D195388D20070C39A /* Foundation.framework */,
 				6003F58F195388D20070C39A /* CoreGraphics.framework */,
 				6003F591195388D20070C39A /* UIKit.framework */,

@@ -12,5 +12,6 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *qqLogInOutButton;
 @property (weak, nonatomic) IBOutlet UIButton *weChatLogInOutButton;
+@property (weak, nonatomic) IBOutlet UIButton *sinaWeiboLogInOutButton;
 
 @end

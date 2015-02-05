@@ -7,14 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "TPAShareService.h"
 #import "TPAQQAccountService.h"
 #import "TPAWeChatAccountService.h"
-#import "TPAShareService.h"
+#import "TPASinaWeiboAccountService.h"
 
 @interface TPASingletonManager : NSObject
 
 + (TPAQQAccountService *)sharedQQService;
 
 + (TPAWeChatAccountService *)sharedWeChatService;
+
++ (TPASinaWeiboAccountService *)sharedSinaWeiboService;
 
 @end

@@ -51,11 +51,23 @@
                                     <action selector="handleWeChatLogInOut:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DkZ-jl-l5f"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BT7-hI-XyS">
+                                <rect key="frame" x="0.0" y="270" width="768" height="45"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal" title="Sina Weibo Login">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected" title="Sina Weibo Logout"/>
+                                <connections>
+                                    <action selector="handleSinaWeiboLogInOut:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Woz-zt-moW"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <connections>
                         <outlet property="qqLogInOutButton" destination="qjy-ly-unm" id="D4Y-FQ-W8n"/>
+                        <outlet property="sinaWeiboLogInOutButton" destination="BT7-hI-XyS" id="vHw-ZA-Gsv"/>
                         <outlet property="weChatLogInOutButton" destination="AKn-uB-ids" id="yUA-VN-4rn"/>
                     </connections>
                 </viewController>

@@ -12,6 +12,7 @@
 #import "ERActionSheet.h"
 #import "TPAQQAccountService.h"
 #import "TPAWeChatAccountService.h"
+#import "TPASinaWeiboAccountService.h"
 
 #define TPABundleImage(imageName) [UIImage imageNamed:[NSString stringWithFormat:@"TPAAcoutSerivece.bundle/%@", imageName]]
 
@@ -30,6 +31,7 @@
 @property (nonatomic, strong) TPAShareContentBlock contentBlock;
 @property (nonatomic, strong) TPAQQAccountService *qqService;
 @property (nonatomic, strong) TPAWeChatAccountService *weChatService;
+@property (nonatomic, strong) TPASinaWeiboAccountService *sinaWeiboSerivce;
 @end
 
 @implementation TPAShareService
@@ -43,6 +45,7 @@
     if (self) {
         self.qqService = [TPAQQAccountService service];
         self.weChatService = [TPAWeChatAccountService service];
+        self.sinaWeiboSerivce = [TPASinaWeiboAccountService service];
     }
     return self;
 }
@@ -96,6 +99,9 @@
     if ([self.weChatService isShareEnable]) {
         enabledSharePaths |= TPAShareToWeChatFriend;
         enabledSharePaths |= TPAShareToWeChatMoment;
+    }
+    if ([self.sinaWeiboSerivce isShareEnable]) {
+        enabledSharePaths |= TPAShareToSinaWeibo;
     }
     if ([MFMessageComposeViewController canSendText]) {
         enabledSharePaths |= TPAShareToSMS;
@@ -161,7 +167,12 @@
         return;
     }
     if (shareTo & TPAShareToSinaWeibo) {
-        
+        TPAShareContentItem *contentItem = self.contentBlock(TPAShareToSinaWeibo);
+        if (contentItem.linkUrlStr) {
+            [self.sinaWeiboSerivce shareToWeiboWithURL:contentItem.linkUrlStr title:contentItem.title description:contentItem.content previewImage:contentItem.image];
+        } else {
+            [self.sinaWeiboSerivce shareToWeiboWithImage:contentItem.image title:contentItem.title description:contentItem.content];
+        }
         return;
     }
     if (shareTo & TPAShareToSMS) {

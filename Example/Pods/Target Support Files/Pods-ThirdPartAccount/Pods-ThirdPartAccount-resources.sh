@@ -44,6 +44,7 @@ install_resource()
   esac
 }
           install_resource "QQSDK/QQSDK/TencentOpenApi_IOS_Bundle.bundle"
+                    install_resource "SinaWeiboSDK/SinaWeiboSDK/WeiboSDK.bundle"
                     install_resource "../../ThirdPartAccount/TPAAcoutSerivece.bundle"
           
 rsync -avr --copy-links --no-relative --exclude '*/.svn/*' --files-from="$RESOURCES_TO_COPY" / "${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"

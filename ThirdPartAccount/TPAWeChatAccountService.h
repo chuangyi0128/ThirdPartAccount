@@ -113,7 +113,7 @@ extern NSString * const TPAWeChatAccountUserAvatarLinkKey;
  *  @param  urlStr      分享的url链接
  *  @param  title       标题
  *  @param  desc        描述
- *  @param  prevImage   预览图，最大1MB
+ *  @param  prevImage   预览图，最大32KB
  */
 - (void)shareToWeChatFriendsWithURL:(NSString *)urlStr
                         title:(NSString *)title
@@ -135,7 +135,7 @@ extern NSString * const TPAWeChatAccountUserAvatarLinkKey;
  *  @param  urlStr      分享的url链接
  *  @param  title       标题
  *  @param  desc        描述
- *  @param  prevImage   预览图，最大1MB
+ *  @param  prevImage   预览图，最大32KB
  */
 - (void)shareToWeChatMomentWithURL:(NSString *)urlStr
                       title:(NSString *)title

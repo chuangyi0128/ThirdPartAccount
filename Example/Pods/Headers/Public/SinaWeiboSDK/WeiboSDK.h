@@ -1,0 +1,1 @@
+../../../SinaWeiboSDK/SinaWeiboSDK/WeiboSDK.h

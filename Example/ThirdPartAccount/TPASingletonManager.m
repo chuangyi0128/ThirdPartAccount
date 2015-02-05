@@ -23,4 +23,11 @@
     return [TPAWeChatAccountService service];
 }
 
++ (TPASinaWeiboAccountService *)sharedSinaWeiboService
+{
+    [TPASinaWeiboAccountService setAppKey:@"2045436852"];
+    [TPASinaWeiboAccountService setWeiboRedirectUrl:@"http://www.sina.com"];
+    return [TPASinaWeiboAccountService service];
+}
+
 @end
