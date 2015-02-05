@@ -170,6 +170,8 @@ static NSString *appId;
     _accessToken = nil;
     _tokeExpirationDate = nil;
     _openId = nil;
+    _nickName = nil;
+    _avatarLink = nil;
 }
 
 - (SendMessageToQQReq *)requestWithURL:(NSString *)urlStr title:(NSString *)title description:(NSString *)desc previewImage:(UIImage *)prevImage

@@ -11,5 +11,6 @@
 @interface TPAViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UIButton *qqLogInOutButton;
+@property (weak, nonatomic) IBOutlet UIButton *weChatLogInOutButton;
 
 @end

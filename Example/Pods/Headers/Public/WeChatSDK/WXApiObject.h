@@ -1,0 +1,1 @@
+../../../WeChatSDK/WeChatSDK/WXApiObject.h

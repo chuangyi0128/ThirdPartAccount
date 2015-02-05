@@ -25,6 +25,7 @@ Pod::Spec.new do |s|
   s.frameworks = 'MessageUI'
 
   s.dependency 'QQSDK'
+  s.dependency 'WeChatSDK'
   s.dependency 'UIImage-Resize'
   s.dependency 'ERActionSheet'
   s.dependency 'UICategory'

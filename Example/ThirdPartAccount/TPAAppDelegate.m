@@ -7,7 +7,7 @@
 //
 
 #import "TPAAppDelegate.h"
-#import "TPAQQAccountService.h"
+#import "TPASingletonManager.h"
 
 @implementation TPAAppDelegate
 
@@ -16,7 +16,7 @@
     // Override point for customization after application launch.
     return YES;
 }
-							
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -46,12 +46,22 @@
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-    return [TPAQQAccountService handleOpenURL:url];
+    if ([TPAQQAccountService handleOpenURL:url]) {
+        return YES;
+    } else if ([TPAWeChatAccountService handleOpenURL:url delegate:[TPASingletonManager sharedWeChatService]]) {
+        return YES;
+    }
+    return NO;
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
-    return [TPAQQAccountService handleOpenURL:url];
+    if ([TPAQQAccountService handleOpenURL:url]) {
+        return YES;
+    } else if ([TPAWeChatAccountService handleOpenURL:url delegate:[TPASingletonManager sharedWeChatService]]) {
+        return YES;
+    }
+    return NO;
 }
 
 @end

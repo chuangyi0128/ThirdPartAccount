@@ -7,11 +7,11 @@
 //
 
 #import "TPAViewController.h"
-#import "TPAQQAccountService.h"
-#import "TPAShareService.h"
+#import "TPASingletonManager.h"
 
 @interface TPAViewController ()
 @property (nonatomic, strong) TPAQQAccountService *qqAccountService;
+@property (nonatomic, strong) TPAWeChatAccountService *weChatAccountService;
 @property (nonatomic, strong) TPAShareService *shareService;
 @property (nonatomic, strong) UIImage *testImage;
 @end
@@ -23,8 +23,10 @@
     [super viewDidLoad];
     [self setupNotifications];
     
-    [TPAQQAccountService setAppId:@"222222"];
-    self.qqAccountService = [TPAQQAccountService service];
+    self.qqAccountService = [TPASingletonManager sharedQQService];
+    
+    self.weChatAccountService = [TPASingletonManager sharedWeChatService];
+    
     self.shareService = [[TPAShareService alloc] init];
     
     self.testImage = [UIImage imageNamed:@"image02"];
@@ -54,6 +56,13 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleQQUserInfo:) name:TPANotificationQQAccountDidGetUserInfo object:self.qqAccountService];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleQQShare:) name:TPANotificationShareToQQFinished object:self.qqAccountService];
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleWeChatLogin:) name:TPANotificationWeChatAccountDidLogin object:self.weChatAccountService];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleWeChatLogout:) name:TPANotificationWeChatAccountDidLogout object:self.weChatAccountService];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleWeChatUserInfo:) name:TPANotificationWeChatAccountDidGetUserInfo object:self.weChatAccountService];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleWeChatShare:) name:TPANotificationShareToWeChatFinished object:self.weChatAccountService];
 }
 
 - (IBAction)handleQQLogInOut:(UIButton *)sender
@@ -62,6 +71,15 @@
         [self.qqAccountService qqLogout];
     } else {
         [self.qqAccountService qqLogin];
+    }
+}
+
+- (IBAction)handleWeChatLogInOut:(UIButton *)sender
+{
+    if ([self.weChatAccountService isAuthorized]) {
+        [self.weChatAccountService weChatLogout];
+    } else {
+        [self.weChatAccountService weChatLogin];
     }
 }
 
@@ -75,7 +93,7 @@
         contentItem.title = @"ThirdPartAccount";
         contentItem.content = @"Test content 这是测试内容\n是测试内容～";
         contentItem.linkUrlStr = @"http://cp.163.com";
-        contentItem.image = [UIImage imageNamed:@"image02"];
+        contentItem.image = self.testImage;
         return contentItem;
     }];
 }
@@ -141,7 +159,53 @@
     
     BOOL succeed = [noti.userInfo[TPASucceedFlagKey] boolValue];
     if (succeed) {
-        NSLog(@"分享成功");
+        NSLog(@"分享已发出");
+    } else {
+        NSError *error = noti.userInfo[TPAErrorKey];
+        NSLog(@"error:%@", error.localizedDescription);
+    }
+}
+
+- (void)handleWeChatLogin:(NSNotification *)noti
+{
+    NSLog(@"%s", __func__);
+    
+    BOOL succeed = [noti.userInfo[TPASucceedFlagKey] boolValue];
+    if (succeed) {
+        NSLog(@"succeed:%@", noti.userInfo);
+    } else {
+        NSError *error = noti.userInfo[TPAErrorKey];
+        NSLog(@"error:%@", error.localizedDescription);
+    }
+    self.weChatLogInOutButton.selected = succeed;
+}
+
+- (void)handleWeChatLogout:(NSNotification *)noti
+{
+    NSLog(@"%s", __func__);
+    self.weChatLogInOutButton.selected = NO;
+}
+
+- (void)handleWeChatUserInfo:(NSNotification *)noti
+{
+    NSLog(@"%s", __func__);
+    
+    BOOL succeed = [noti.userInfo[TPASucceedFlagKey] boolValue];
+    if (succeed) {
+        NSLog(@"succeed:%@", noti.userInfo);
+    } else {
+        NSError *error = noti.userInfo[TPAErrorKey];
+        NSLog(@"error:%@", error.localizedDescription);
+    }
+}
+
+- (void)handleWeChatShare:(NSNotification *)noti
+{
+    NSLog(@"%s", __func__);
+    
+    BOOL succeed = [noti.userInfo[TPASucceedFlagKey] boolValue];
+    if (succeed) {
+        NSLog(@"分享已发出");
     } else {
         NSError *error = noti.userInfo[TPAErrorKey];
         NSLog(@"error:%@", error.localizedDescription);
