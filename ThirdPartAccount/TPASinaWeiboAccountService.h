@@ -62,10 +62,10 @@ extern NSString * const TPASinaWeiboAccountUserAvatarLinkKey;
 + (void)setWeiboRedirectUrl:(NSString *)url;
 
 /**
- *  获得service新实例。
- *  调用之前先设置appid和secret，否则返回nil
+ *  获得service单例。
+ *  调用之前先设置appKey，否则返回nil
  */
-+ (instancetype)service;
++ (instancetype)sharedService;
 
 /*! @brief 处理Weibo通过URL启动App时传递的数据
  *
@@ -96,24 +96,12 @@ extern NSString * const TPASinaWeiboAccountUserAvatarLinkKey;
 
 /**
  *  Weibo链接类型分享，可以附带一张预览图和多张大图
+ *  @param  image       分享的图片
  *  @param  urlStr      分享的url链接
- *  @param  title       标题
- *  @param  desc        描述
- *  @param  prevImage   预览图
- */
-- (void)shareToWeiboWithURL:(NSString *)urlStr
-                        title:(NSString *)title
-                  description:(NSString *)desc
-                 previewImage:(UIImage *)prevImage;
-
-/**
- *  Weibo图片类型分享(无图片时分享文字)，可以附带一张预览图和多张大图
- *  @param  image       分享的大图
- *  @param  title       标题
- *  @param  desc        描述
+ *  @param  content     分享内容
  */
 - (void)shareToWeiboWithImage:(UIImage *)image
-                          title:(NSString *)title
-                    description:(NSString *)desc;
+                          url:(NSString *)urlStr
+                      content:(NSString *)content;
 
 @end

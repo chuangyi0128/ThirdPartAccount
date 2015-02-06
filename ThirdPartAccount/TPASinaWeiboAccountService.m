@@ -51,9 +51,14 @@ static NSString *redirectUrl = @"http://";
     redirectUrl = url;
 }
 
-+ (instancetype)service
++ (instancetype)sharedService
 {
-    return [TPASinaWeiboAccountService new];
+    static TPASinaWeiboAccountService *instance;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        instance = [TPASinaWeiboAccountService new];
+    });
+    return instance;
 }
 
 - (instancetype)init
@@ -149,18 +154,30 @@ static NSString *redirectUrl = @"http://";
     return YES;
 }
 
-- (void)shareToWeiboWithURL:(NSString *)urlStr title:(NSString *)title description:(NSString *)desc previewImage:(UIImage *)prevImage
+- (void)shareToWeiboWithImage:(UIImage *)image url:(NSString *)urlStr content:(NSString *)content
 {
     dispatch_async(self.taskQueue, ^{
-        WBSendMessageToWeiboRequest *request = [self requestWithURL:urlStr title:title description:desc previewImage:prevImage];
-        [WeiboSDK sendRequest:request];
-    });
-}
-
-- (void)shareToWeiboWithImage:(UIImage *)image title:(NSString *)title description:(NSString *)desc
-{
-    dispatch_async(self.taskQueue, ^{
-        WBSendMessageToWeiboRequest *request = [self requestWithImage:image title:title description:desc];
+        WBImageObject *imageObject = [WBImageObject object];
+        if (image) {
+            UIImage *attachImage = image;
+            NSData *imageData = UIImageJPEGRepresentation(image, 1.0f);
+            
+            for (int i = 1; imageData.length > 1024 * 1024 * 9.9f; i++) { // max:10MB
+                attachImage = [attachImage resizedImageToFitInSize:CGSizeMake(attachImage.size.width * 0.8f, attachImage.size.height * 0.8f) scaleIfSmaller:NO];
+                imageData = UIImageJPEGRepresentation(attachImage, MAX(1.0f - 0.2f * i, 0.5f));
+            }
+            imageObject.imageData = imageData;
+        }
+        
+        WBMessageObject *message = [WBMessageObject message];
+        message.imageObject = imageObject;
+        message.text = [content stringByAppendingString:urlStr];
+        
+        WBAuthorizeRequest *authRequest = [WBAuthorizeRequest request];
+        authRequest.redirectURI = redirectUrl;
+        authRequest.scope = @"statuses_to_me_read";
+        
+        WBSendMessageToWeiboRequest *request = [WBSendMessageToWeiboRequest requestWithMessage:message authInfo:authRequest access_token:self.accessToken];
         [WeiboSDK sendRequest:request];
     });
 }
@@ -196,77 +213,6 @@ static NSString *redirectUrl = @"http://";
     return responseDict;
 }
 
-- (WBSendMessageToWeiboRequest *)requestWithURL:(NSString *)urlStr title:(NSString *)title description:(NSString *)desc previewImage:(UIImage *)prevImage
-{
-    if (urlStr.length == 0) {
-        return nil;
-    }
-    if (title.length == 0) {
-        title = @"快来看看我的分享";
-    }
-    
-    WBWebpageObject *webpage = [WBWebpageObject object];
-    webpage.objectID = [NSString stringWithFormat:@"share_link-%@", [[NSDate date] description]];
-    webpage.title = title;
-    webpage.description = desc;
-    webpage.webpageUrl = urlStr;
-    
-    NSData *prevImageData = nil;
-    if (prevImage) {
-        prevImage = [prevImage cropToSquareInCenter];
-        prevImage = [prevImage resizedImageToSize:CGSizeMake(300, 300)];
-        prevImageData = UIImageJPEGRepresentation(prevImage, 1.0f);
-        
-        for (int i = 1; prevImageData.length > 1024 * 30; i++) { // max:32KB
-            prevImageData = UIImageJPEGRepresentation(prevImage, 1.0f - 0.2f * i);
-        }
-        webpage.thumbnailData = prevImageData;
-    }
-    
-    WBMessageObject *message = [WBMessageObject message];
-    message.text = desc;
-    message.mediaObject = webpage;
-    
-    WBAuthorizeRequest *authRequest = [WBAuthorizeRequest request];
-    authRequest.redirectURI = redirectUrl;
-    authRequest.scope = @"statuses_to_me_read";
-    
-    return [WBSendMessageToWeiboRequest requestWithMessage:message authInfo:authRequest access_token:self.accessToken];
-}
-
-- (WBSendMessageToWeiboRequest *)requestWithImage:(UIImage *)image title:(NSString *)title description:(NSString *)desc
-{
-    if (image == nil && title.length == 0 && desc.length == 0) {
-        return nil;
-    }
-    
-    WBImageObject *imageObject = [WBImageObject object];
-    if (image) {
-        NSData *imageData = UIImageJPEGRepresentation(image, 1.0f);
-
-        for (int i = 1; imageData.length > 1024 * 1024 * 9.9f; i++) { // max:10MB
-            image = [image resizedImageToFitInSize:CGSizeMake(image.size.width * 0.8f, image.size.height * 0.8f) scaleIfSmaller:NO];
-            imageData = UIImageJPEGRepresentation(image, MAX(1.0f - 0.2f * i, 0.5f));
-        }
-        imageObject.imageData = imageData;
-    }
-    
-    WBMessageObject *message = [WBMessageObject message];
-    message.imageObject = imageObject;
-    
-    if (desc.length > 0) {
-        message.text = desc;
-    } else {
-        message.text = title;
-    }
-    
-    WBAuthorizeRequest *authRequest = [WBAuthorizeRequest request];
-    authRequest.redirectURI = redirectUrl;
-    authRequest.scope = @"statuses_to_me_read";
-    
-    return [WBSendMessageToWeiboRequest requestWithMessage:message authInfo:authRequest access_token:self.accessToken];
-}
-
 
 #pragma mark - WeiboSDKDelegate
 
@@ -299,7 +245,16 @@ static NSString *redirectUrl = @"http://";
                 _accessToken = authResponse.accessToken;
                 _tokeExpirationDate = authResponse.expirationDate;
                 
-                NSDictionary *userInfo = @{TPASucceedFlagKey : @(YES)};
+                NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithObject:@(YES) forKey:TPASucceedFlagKey];
+                if (self.accessToken.length > 0) {
+                    userInfo[TPASinaWeiboAccountAccessTokenKey] = self.accessToken;
+                }
+                if (self.tokeExpirationDate) {
+                    userInfo[TPASinaWeiboAccountTokeExpirationDateKey] = self.tokeExpirationDate;
+                }
+                if (self.userId.length > 0) {
+                    userInfo[TPASinaWeiboAccountUserIdKey] = self.userId;
+                }
                 [self notify:TPANotificationSinaWeiboAccountDidLogin withUserInfo:userInfo];
             }
                 break;
@@ -327,10 +282,7 @@ static NSString *redirectUrl = @"http://";
                     [self didReceiveWeiboResponse:sendWeiboResponse.authResponse];
                 }
                 
-                NSDictionary *userInfo = @{TPASucceedFlagKey : @(YES),
-                                           TPASinaWeiboAccountAccessTokenKey : self.accessToken,
-                                           TPASinaWeiboAccountTokeExpirationDateKey : self.tokeExpirationDate,
-                                           TPASinaWeiboAccountUserIdKey : self.userId};
+                NSDictionary *userInfo = @{TPASucceedFlagKey : @(YES)};
                 [self notify:TPANotificationShareToSinaWeiboFinished withUserInfo:userInfo];
             }
                 break;

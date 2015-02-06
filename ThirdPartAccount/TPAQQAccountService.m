@@ -47,9 +47,14 @@ static NSString *appId;
     appId = theAppId;
 }
 
-+ (instancetype)service
++ (instancetype)sharedService
 {
-    return [TPAQQAccountService new];
+    static TPAQQAccountService *instance;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        instance = [TPAQQAccountService new];
+    });
+    return instance;
 }
 
 - (instancetype)init

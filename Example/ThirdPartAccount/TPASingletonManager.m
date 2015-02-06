@@ -13,21 +13,21 @@
 + (TPAQQAccountService *)sharedQQService
 {
     [TPAQQAccountService setAppId:@"222222"];
-    return [TPAQQAccountService service];
+    return [TPAQQAccountService sharedService];
 }
 
 + (TPAWeChatAccountService *)sharedWeChatService
 {
     [TPAWeChatAccountService setAppId:@"wxd930ea5d5a258f4f"];
     [TPAWeChatAccountService setSecret:@"0c806938e2413ce73eef92cc3"];
-    return [TPAWeChatAccountService service];
+    return [TPAWeChatAccountService sharedService];
 }
 
 + (TPASinaWeiboAccountService *)sharedSinaWeiboService
 {
     [TPASinaWeiboAccountService setAppKey:@"2045436852"];
     [TPASinaWeiboAccountService setWeiboRedirectUrl:@"http://www.sina.com"];
-    return [TPASinaWeiboAccountService service];
+    return [TPASinaWeiboAccountService sharedService];
 }
 
 @end

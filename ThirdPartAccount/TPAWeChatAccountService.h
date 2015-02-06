@@ -76,10 +76,10 @@ extern NSString * const TPAWeChatAccountUserAvatarLinkKey;
 + (void)setSecret:(NSString *)theSecret;
 
 /**
- *  获得service新实例。
+ *  获得service单例。
  *  调用之前先设置appid和secret，否则返回nil
  */
-+ (instancetype)service;
++ (instancetype)sharedService;
 
 /*! @brief 处理微信通过URL启动App时传递的数据
  *

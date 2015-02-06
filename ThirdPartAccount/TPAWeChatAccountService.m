@@ -61,9 +61,14 @@ static NSString *secret;
     secret = theSecret;
 }
 
-+ (instancetype)service
++ (instancetype)sharedService
 {
-    return [TPAWeChatAccountService new];
+    static TPAWeChatAccountService *instance;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        instance = [TPAWeChatAccountService new];
+    });
+    return instance;
 }
 
 - (instancetype)init
@@ -148,13 +153,25 @@ static NSString *secret;
                 _city = [responseDict[@"city"] description];
                 _avatarLink = [responseDict[@"headimgurl"] description];
                 
-                NSDictionary *userInfo = @{TPASucceedFlagKey : @(YES),
-                                           TPAWeChatAccountUserUnionIdKey : self.unionId,
-                                           TPAWeChatAccountUserNickNameKey : self.nickName,
-                                           TPAWeChatAccountUserSexKey : self.sex,
-                                           TPAWeChatAccountUserProvinceKey : self.province,
-                                           TPAWeChatAccountUserCityKey : self.city,
-                                           TPAWeChatAccountUserAvatarLinkKey : self.avatarLink};
+                NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithObject:@(YES) forKey:TPASucceedFlagKey];
+                if (self.unionId.length > 0) {
+                    userInfo[TPAWeChatAccountUserUnionIdKey] = self.unionId;
+                }
+                if (self.nickName.length > 0) {
+                    userInfo[TPAWeChatAccountUserNickNameKey] = self.nickName;
+                }
+                if (self.sex.length > 0) {
+                    userInfo[TPAWeChatAccountUserSexKey] = self.sex;
+                }
+                if (self.province.length > 0) {
+                    userInfo[TPAWeChatAccountUserProvinceKey] = self.province;
+                }
+                if (self.city.length > 0) {
+                    userInfo[TPAWeChatAccountUserCityKey] = self.city;
+                }
+                if (self.avatarLink.length > 0) {
+                    userInfo[TPAWeChatAccountUserAvatarLinkKey] = self.avatarLink;
+                }
                 [self notify:TPANotificationWeChatAccountDidGetUserInfo withUserInfo:userInfo];
             }
         });
@@ -274,10 +291,16 @@ static NSString *secret;
             _refreshToken = [responseDict[@"refresh_token"] description];
             _openId = [responseDict[@"openid"] description];
             
-            NSDictionary *userInfo = @{TPASucceedFlagKey : @(YES),
-                                       TPAWeChatAccountAccessTokenKey : self.accessToken,
-                                       TPAWeChatAccountTokeExpirationDateKey : self.tokeExpirationDate,
-                                       TPAWeChatAccountOpenIdKey : self.openId};
+            NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithObject:@(YES) forKey:TPASucceedFlagKey];
+            if (self.accessToken.length > 0) {
+                userInfo[TPAWeChatAccountAccessTokenKey] = self.accessToken;
+            }
+            if (self.tokeExpirationDate) {
+                userInfo[TPAWeChatAccountTokeExpirationDateKey] = self.tokeExpirationDate;
+            }
+            if (self.openId.length > 0) {
+                userInfo[TPAWeChatAccountOpenIdKey] = self.openId;
+            }
             [self notify:TPANotificationWeChatAccountDidLogin withUserInfo:userInfo];
         }
     });
@@ -315,10 +338,16 @@ static NSString *secret;
             _refreshToken = [responseDict[@"refresh_token"] description];
             _openId = [responseDict[@"openid"] description];
             
-            NSDictionary *userInfo = @{TPASucceedFlagKey : @(YES),
-                                       TPAWeChatAccountAccessTokenKey : self.accessToken,
-                                       TPAWeChatAccountTokeExpirationDateKey : self.tokeExpirationDate,
-                                       TPAWeChatAccountOpenIdKey : self.openId};
+            NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithObject:@(YES) forKey:TPASucceedFlagKey];
+            if (self.accessToken.length > 0) {
+                userInfo[TPAWeChatAccountAccessTokenKey] = self.accessToken;
+            }
+            if (self.tokeExpirationDate) {
+                userInfo[TPAWeChatAccountTokeExpirationDateKey] = self.tokeExpirationDate;
+            }
+            if (self.openId.length > 0) {
+                userInfo[TPAWeChatAccountOpenIdKey] = self.openId;
+            }
             [self notify:TPANotificationWeChatAccountDidLogin withUserInfo:userInfo];
         }
     });

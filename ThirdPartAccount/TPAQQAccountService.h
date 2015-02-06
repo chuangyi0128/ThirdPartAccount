@@ -50,10 +50,10 @@ extern NSString * const TPAQQAccountUserAvatarLinkKey;
 + (void)setAppId:(NSString *)theAppId;
 
 /**
- *  获得service新实例。
+ *  获得service单例。
  *  调用之前先设置appid，否则返回nil
  */
-+ (instancetype)service;
++ (instancetype)sharedService;
 
 /**
  * sdk是否可以处理应用拉起协议

@@ -43,9 +43,9 @@
 {
     self = [super init];
     if (self) {
-        self.qqService = [TPAQQAccountService service];
-        self.weChatService = [TPAWeChatAccountService service];
-        self.sinaWeiboSerivce = [TPASinaWeiboAccountService service];
+        self.qqService = [TPAQQAccountService sharedService];
+        self.weChatService = [TPAWeChatAccountService sharedService];
+        self.sinaWeiboSerivce = [TPASinaWeiboAccountService sharedService];
     }
     return self;
 }
@@ -168,11 +168,7 @@
     }
     if (shareTo & TPAShareToSinaWeibo) {
         TPAShareContentItem *contentItem = self.contentBlock(TPAShareToSinaWeibo);
-        if (contentItem.linkUrlStr) {
-            [self.sinaWeiboSerivce shareToWeiboWithURL:contentItem.linkUrlStr title:contentItem.title description:contentItem.content previewImage:contentItem.image];
-        } else {
-            [self.sinaWeiboSerivce shareToWeiboWithImage:contentItem.image title:contentItem.title description:contentItem.content];
-        }
+        [self.sinaWeiboSerivce shareToWeiboWithImage:contentItem.image url:contentItem.linkUrlStr content:contentItem.content];
         return;
     }
     if (shareTo & TPAShareToSMS) {
