@@ -64,6 +64,7 @@ static NSString *appId;
     if (appId) {
         self = [super init];
         if (self) {
+            self.taskQueue = dispatch_queue_create(NSStringFromClass(self.class).UTF8String, DISPATCH_QUEUE_CONCURRENT);
             self.oauth = [[TencentOAuth alloc] initWithAppId:appId andDelegate:self];
             self.permissionsArray = @[kOPEN_PERMISSION_GET_INFO,
                                       kOPEN_PERMISSION_ADD_TOPIC,
@@ -137,8 +138,10 @@ static NSString *appId;
     dispatch_async(self.taskQueue, ^{
         SendMessageToQQReq *reqest = [self requestWithURL:urlStr title:title description:desc previewImage:prevImage];
         if (reqest) {
-            QQApiSendResultCode code = [QQApiInterface sendReq:reqest];
-            [self proceedShareResult:code];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                QQApiSendResultCode code = [QQApiInterface sendReq:reqest];
+                [self proceedShareResult:code];
+            });
         }
     });
 }
@@ -148,8 +151,10 @@ static NSString *appId;
     dispatch_async(self.taskQueue, ^{
         SendMessageToQQReq *reqest = [self requestWithImage:image title:title description:desc];
         if (reqest) {
-            QQApiSendResultCode code = [QQApiInterface sendReq:reqest];
-            [self proceedShareResult:code];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                QQApiSendResultCode code = [QQApiInterface sendReq:reqest];
+                [self proceedShareResult:code];
+            });
         }
     });
 }
@@ -159,8 +164,10 @@ static NSString *appId;
     dispatch_async(self.taskQueue, ^{
         SendMessageToQQReq *reqest = [self requestWithURL:urlStr title:title description:desc previewImage:prevImage];
         if (reqest) {
-            QQApiSendResultCode code = [QQApiInterface SendReqToQZone:reqest];
-            [self proceedShareResult:code];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                QQApiSendResultCode code = [QQApiInterface sendReq:reqest];
+                [self proceedShareResult:code];
+            });
         }
     });
 }
@@ -170,8 +177,10 @@ static NSString *appId;
     dispatch_async(self.taskQueue, ^{
         SendMessageToQQReq *reqest = [self requestWithImage:image title:title description:desc];
         if (reqest) {
-            QQApiSendResultCode code = [QQApiInterface SendReqToQZone:reqest];
-            [self proceedShareResult:code];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                QQApiSendResultCode code = [QQApiInterface sendReq:reqest];
+                [self proceedShareResult:code];
+            });
         }
     });
 }
