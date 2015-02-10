@@ -76,7 +76,9 @@ static NSString *redirectUrl = @"http://";
 
 - (void)dealloc
 {
-    dispatch_release(self.taskQueue);
+    if (self.taskQueue) {
+        dispatch_release(self.taskQueue);
+    }
 }
 
 + (BOOL)handleOpenURL:(NSURL *)url delegate:(id <WeiboSDKDelegate>)delegate

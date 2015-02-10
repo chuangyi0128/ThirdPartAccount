@@ -76,7 +76,9 @@ static NSString *appId;
 
 - (void)dealloc
 {
-    dispatch_release(self.taskQueue);
+    if (self.taskQueue) {
+        dispatch_release(self.taskQueue);
+    }
 }
 
 + (BOOL)canHandleOpenURL:(NSURL *)url
