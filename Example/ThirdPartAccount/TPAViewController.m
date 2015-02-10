@@ -7,13 +7,20 @@
 //
 
 #import "TPAViewController.h"
-#import "TPASingletonManager.h"
+#import "TPAAccountService.h"
+#import "TPAShareService.h"
+#import "TPAQQAccountService.h"
+#import "TPAWeChatAccountService.h"
+#import "TPASinaWeiboAccountService.h"
+
+#define AuthUseAccoutService 1
 
 @interface TPAViewController ()
 @property (nonatomic, strong) TPAQQAccountService *qqAccountService;
 @property (nonatomic, strong) TPAWeChatAccountService *weChatAccountService;
 @property (nonatomic, strong) TPASinaWeiboAccountService *weiboAccountService;
 @property (nonatomic, strong) TPAShareService *shareService;
+@property (nonatomic, strong) TPAAccountService *accountService;
 @property (nonatomic, strong) UIImage *testImage;
 @end
 
@@ -22,17 +29,20 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self setupNotifications];
     
-    self.qqAccountService = [TPASingletonManager sharedQQService];
+    self.qqAccountService = [TPAQQAccountService sharedService];
     
-    self.weChatAccountService = [TPASingletonManager sharedWeChatService];
+    self.weChatAccountService = [TPAWeChatAccountService sharedService];
     
-    self.weiboAccountService = [TPASingletonManager sharedSinaWeiboService];
+    self.weiboAccountService = [TPASinaWeiboAccountService sharedService];
+    
+    self.accountService = [[TPAAccountService alloc] init];
     
     self.shareService = [[TPAShareService alloc] init];
     
     self.testImage = [UIImage imageNamed:@"image02"];
+    
+    [self setupNotifications];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -78,29 +88,41 @@
 
 - (IBAction)handleQQLogInOut:(UIButton *)sender
 {
+#if AuthUseAccoutService
+    [self.accountService auth:TPAAuthTypeQQ];
+#else
     if ([self.qqAccountService isAuthorized]) {
         [self.qqAccountService qqLogout];
     } else {
         [self.qqAccountService qqLogin];
     }
+#endif
 }
 
 - (IBAction)handleWeChatLogInOut:(UIButton *)sender
 {
+#if AuthUseAccoutService
+    [self.accountService auth:TPAAuthTypeWeChat];
+#else
     if ([self.weChatAccountService isAuthorized]) {
         [self.weChatAccountService weChatLogout];
     } else {
         [self.weChatAccountService weChatLogin];
     }
+#endif
 }
 
 - (IBAction)handleSinaWeiboLogInOut:(UIButton *)sender
 {
+#if AuthUseAccoutService
+    [self.accountService auth:TPAAuthTypeSinaWeibo];
+#else
     if ([self.weiboAccountService isAuthorized]) {
         [self.weiboAccountService weiboLogout];
     } else {
         [self.weiboAccountService weiboLogin];
     }
+#endif
 }
 
 - (IBAction)handleShare:(UIButton *)sender

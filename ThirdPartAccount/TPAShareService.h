@@ -9,12 +9,15 @@
 #import <Foundation/Foundation.h>
 #import "TPADefines.h"
 
+extern NSString * const TPANotificationShareFinished;
+
+
 @class TPAShareContentItem;
 
 /**
- *  用于配置分享内容的block，会循环调用多次，每一次枚举一类分享途径
+ *  用于配置分享内容的block
  *
- *  @return 返回nil则当前分享途径不显示在可选列表中。
+ *  @return 返回nil则不分享
  */
 typedef TPAShareContentItem * (^TPAShareContentBlock)(TPAShareTo shareTo);
 

@@ -59,8 +59,6 @@ static NSString *appId;
 
 - (instancetype)init
 {
-    NSAssert(appId.length > 0, @"%s 'appId' must be not nil", __func__);
-    
     if (appId) {
         self = [super init];
         if (self) {

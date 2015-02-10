@@ -73,9 +73,6 @@ static NSString *secret;
 
 - (instancetype)init
 {
-    NSAssert(appId.length > 0, @"%s 'appId' must be not nil", __func__);
-    NSAssert(secret.length > 0, @"%s 'secret' must be not nil", __func__);
-    
     if (appId && secret) {
         self = [super init];
         if (self) {

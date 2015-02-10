@@ -63,8 +63,6 @@ static NSString *redirectUrl = @"http://";
 
 - (instancetype)init
 {
-    NSAssert(appKey.length > 0, @"%s 'appId' must be not nil", __func__);
-    
     if (appKey) {
         self = [super init];
         if (self) {

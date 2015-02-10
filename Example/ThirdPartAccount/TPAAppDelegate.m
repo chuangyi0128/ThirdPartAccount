@@ -7,13 +7,22 @@
 //
 
 #import "TPAAppDelegate.h"
-#import "TPASingletonManager.h"
+#import "TPAQQAccountService.h"
+#import "TPAWeChatAccountService.h"
+#import "TPASinaWeiboAccountService.h"
 
 @implementation TPAAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    [TPAQQAccountService setAppId:@"222222"];
+    
+    [TPAWeChatAccountService setAppId:@"wxd930ea5d5a258f4f"];
+    [TPAWeChatAccountService setSecret:@"0c806938e2413ce73eef92cc3"];
+    
+    [TPASinaWeiboAccountService setAppKey:@"2045436852"];
+    [TPASinaWeiboAccountService setWeiboRedirectUrl:@"http://www.sina.com"];
+    
     return YES;
 }
 
@@ -48,9 +57,9 @@
 {
     if ([TPAQQAccountService handleOpenURL:url]) {
         return YES;
-    } else if ([TPAWeChatAccountService handleOpenURL:url delegate:[TPASingletonManager sharedWeChatService]]) {
+    } else if ([TPAWeChatAccountService handleOpenURL:url delegate:[TPAWeChatAccountService sharedService]]) {
         return YES;
-    } else if ([TPASinaWeiboAccountService handleOpenURL:url delegate:[TPASingletonManager sharedSinaWeiboService]]) {
+    } else if ([TPASinaWeiboAccountService handleOpenURL:url delegate:[TPASinaWeiboAccountService sharedService]]) {
         return YES;
     }
     return NO;
@@ -60,9 +69,9 @@
 {
     if ([TPAQQAccountService handleOpenURL:url]) {
         return YES;
-    } else if ([TPAWeChatAccountService handleOpenURL:url delegate:[TPASingletonManager sharedWeChatService]]) {
+    } else if ([TPAWeChatAccountService handleOpenURL:url delegate:[TPAWeChatAccountService sharedService]]) {
         return YES;
-    } else if ([TPASinaWeiboAccountService handleOpenURL:url delegate:[TPASingletonManager sharedSinaWeiboService]]) {
+    } else if ([TPASinaWeiboAccountService handleOpenURL:url delegate:[TPASinaWeiboAccountService sharedService]]) {
         return YES;
     }
     return NO;

@@ -16,6 +16,9 @@
 
 #define TPABundleImage(imageName) [UIImage imageNamed:[NSString stringWithFormat:@"TPAAcoutSerivece.bundle/%@", imageName]]
 
+NSString * const TPANotificationShareFinished = @"TPANotificationShareFinished";
+
+
 #pragma mark - TPAShareContentItem
 
 @implementation TPAShareContentItem
@@ -29,13 +32,9 @@
 
 @interface TPAShareService () <ERActionSheetDelegate, MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate>
 @property (nonatomic, strong) TPAShareContentBlock contentBlock;
-@property (nonatomic, strong) TPAQQAccountService *qqService;
-@property (nonatomic, strong) TPAWeChatAccountService *weChatService;
-@property (nonatomic, strong) TPASinaWeiboAccountService *sinaWeiboSerivce;
 @end
 
 @implementation TPAShareService
-
 
 #pragma mark Public Methods
 
@@ -43,11 +42,19 @@
 {
     self = [super init];
     if (self) {
-        self.qqService = [TPAQQAccountService sharedService];
-        self.weChatService = [TPAWeChatAccountService sharedService];
-        self.sinaWeiboSerivce = [TPASinaWeiboAccountService sharedService];
+        // QQ
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleQQDidShare:) name:TPANotificationShareToQQFinished object:self.qqService];
+        // WeChat
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleWeChatDidShare:) name:TPANotificationShareToWeChatFinished object:self.weChatService];
+        // Weibo
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleSinaWeiboDidShare:) name:TPANotificationShareToSinaWeiboFinished object:self.sinaWeiboSerivce];
     }
     return self;
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)showShareList:(TPAShareTo)shareTo inView:(UIView *)view usingBlock:(TPAShareContentBlock)contentBlock
@@ -89,6 +96,21 @@
 
 #pragma mark Private Methods
 
+- (TPAQQAccountService *)qqService
+{
+    return [TPAQQAccountService sharedService];
+}
+
+- (TPAWeChatAccountService *)weChatService
+{
+    return [TPAWeChatAccountService sharedService];
+}
+
+- (TPASinaWeiboAccountService *)sinaWeiboSerivce
+{
+    return [TPASinaWeiboAccountService sharedService];
+}
+
 - (TPAShareTo)enabledPaths
 {
     TPAShareTo enabledSharePaths = 0;
@@ -110,6 +132,26 @@
         enabledSharePaths |= TPAShareToEmail;
     }
     return enabledSharePaths;
+}
+
+- (void)proceedShareNotification:(NSNotification *)noti
+{
+    BOOL succeed = [noti.userInfo[TPASucceedFlagKey] boolValue];
+    if (succeed) {
+        NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithObject:@(YES) forKey:TPASucceedFlagKey];
+        [self notify:TPANotificationShareFinished withUserInfo:userInfo];
+    } else {
+        NSError *error = noti.userInfo[TPAErrorKey];
+        NSError *newError = [NSError errorWithDomain:@"TPAShareService" code:0 userInfo:@{NSLocalizedDescriptionKey:error.localizedDescription}];
+        NSDictionary *userInfo = @{TPASucceedFlagKey : @(NO),
+                                   TPAErrorKey : newError};
+        [self notify:TPANotificationShareFinished withUserInfo:userInfo];
+    }
+}
+
+- (void)notify:(NSString *)notificationName withUserInfo:(NSDictionary *)userInfo
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:self userInfo:[userInfo copy]];
 }
 
 
@@ -230,6 +272,24 @@
     [[UIViewController topmostViewController] dismissViewControllerAnimated:YES completion:^{
         
     }];
+}
+
+
+#pragma mark - Notifications
+
+- (void)handleQQDidShare:(NSNotification *)noti
+{
+    [self proceedShareNotification:noti];
+}
+
+- (void)handleWeChatDidShare:(NSNotification *)noti
+{
+    [self proceedShareNotification:noti];
+}
+
+- (void)handleSinaWeiboDidShare:(NSNotification *)noti
+{
+    [self proceedShareNotification:noti];
 }
 
 @end

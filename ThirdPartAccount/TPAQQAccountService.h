@@ -35,13 +35,13 @@ extern NSString * const TPAQQAccountUserAvatarLinkKey;
 @property (nonatomic, copy, readonly) NSDate *tokeExpirationDate;
 
 /** 用户授权登录后对该用户的唯一标识 */
-@property(nonatomic, copy, readonly) NSString *openId;
+@property (nonatomic, copy, readonly) NSString *openId;
 
 /** 登录用户的昵称 */
-@property(nonatomic, copy, readonly) NSString *nickName;
+@property (nonatomic, copy, readonly) NSString *nickName;
 
 /** 登录用户的头像链接 */
-@property(nonatomic, copy, readonly) NSString *avatarLink;
+@property (nonatomic, copy, readonly) NSString *avatarLink;
 
 
 /**
