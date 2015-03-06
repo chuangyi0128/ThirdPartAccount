@@ -263,7 +263,7 @@ NSString * const TPAAccountUserCityKey = @"city";
         _nickName = noti.userInfo[TPAQQAccountUserNickNameKey];
         _avatarLink = noti.userInfo[TPAQQAccountUserAvatarLinkKey];
         
-        [self notifyLoginSucceed];
+        [self notifyGetUserInfoSucceed];
     } else {
         NSError *error = noti.userInfo[TPAErrorKey];
         NSError *newError = [NSError errorWithDomain:@"TPAAccountService" code:0 userInfo:@{NSLocalizedDescriptionKey:error.localizedDescription}];
@@ -284,7 +284,7 @@ NSString * const TPAAccountUserCityKey = @"city";
         _province = noti.userInfo[TPAWeChatAccountUserProvinceKey];
         _city = noti.userInfo[TPAWeChatAccountUserCityKey];
         
-        [self notifyLoginSucceed];
+        [self notifyGetUserInfoSucceed];
     } else {
         NSError *error = noti.userInfo[TPAErrorKey];
         NSError *newError = [NSError errorWithDomain:@"TPAAccountService" code:0 userInfo:@{NSLocalizedDescriptionKey:error.localizedDescription}];
@@ -302,7 +302,7 @@ NSString * const TPAAccountUserCityKey = @"city";
         _nickName = noti.userInfo[TPASinaWeiboAccountUserNickNameKey];
         _avatarLink = noti.userInfo[TPASinaWeiboAccountUserAvatarLinkKey];
         
-        [self notifyLoginSucceed];
+        [self notifyGetUserInfoSucceed];
     } else {
         NSError *error = noti.userInfo[TPAErrorKey];
         NSError *newError = [NSError errorWithDomain:@"TPAAccountService" code:0 userInfo:@{NSLocalizedDescriptionKey:error.localizedDescription}];

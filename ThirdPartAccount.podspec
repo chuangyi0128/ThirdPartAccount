@@ -9,7 +9,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "ThirdPartAccount"
-  s.version          = "0.1.3"
+  s.version          = "0.1.4"
   s.summary          = "ThirdPartAccount"
   s.description      = "ThirdPartAccount: QQ, Weibo, etc"
   s.homepage         = "https://github.com/chuangyi0128/ThirdPartAccount"

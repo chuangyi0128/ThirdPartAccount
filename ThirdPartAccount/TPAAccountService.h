@@ -15,6 +15,7 @@ extern NSString * const TPANotificationDidLogin;
 extern NSString * const TPANotificationDidGetUserInfo;
 
 // PropertyKeys
+extern NSString * const TPAAccountAuthType;
 extern NSString * const TPAAccountAccessTokenKey;
 extern NSString * const TPAAccountTokeExpirationDateKey;
 extern NSString * const TPAAccountOpenIdKey;
