@@ -26,16 +26,16 @@
 
 - (id)init
 {
-    self = [super initWithFrame:CGRectMake(0, 0, 100, 100)];
+    self = [super initWithFrame:CGRectMake(0, 0, 70, 80)];
     if (self) {
         [self setBackgroundColor:[UIColor clearColor]];
         
-        self.cellImageView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 10, 60, 60)];
+        self.cellImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 50, 50)];
         CALayer *layer = [self.cellImageView layer];
         [layer setMasksToBounds:YES];
         [layer setCornerRadius:8.0f];
         
-        self.cellNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 70, 90, 20)];
+        self.cellNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(2.5, 55, 65, 20)];
         [self.cellNameLabel setTextAlignment:NSTextAlignmentCenter];
         [self.cellNameLabel setBackgroundColor:[UIColor clearColor]];
         [self.cellNameLabel setTextColor:[UIColor whiteColor]];

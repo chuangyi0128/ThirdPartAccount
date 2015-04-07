@@ -1,17 +1,17 @@
 PODS:
-  - ERActionSheet (1.0.2)
+  - ERActionSheet (1.0.3)
   - QQSDK (2.8.1)
   - SinaWeiboSDK (3.0.0)
-  - ThirdPartAccount (0.1.1):
+  - ThirdPartAccount (0.1.4):
     - ERActionSheet
     - QQSDK
     - SinaWeiboSDK
     - UICategory
     - UIImage-Resize
     - WeChatSDK
-  - UICategory (1.0.3)
+  - UICategory (1.0.7)
   - UIImage-Resize (1.0.1)
-  - WeChatSDK (1.5.0)
+  - WeChatSDK (0.0.1)
 
 DEPENDENCIES:
   - QQSDK
@@ -22,12 +22,12 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  ERActionSheet: f29edd74076d1848d8ce08d85aa5cbdca6914bc7
+  ERActionSheet: 407de7d00995133f32e431c6833be7a72307307c
   QQSDK: 51223613be254330b17f137e9a0eda0d89324842
   SinaWeiboSDK: 4f1d1de15513bf080ea5c58f7a89dd074a767f33
-  ThirdPartAccount: fb8cc57fd809cea47ded05dcbb81275fbb32ec52
-  UICategory: 15e418ec8388c22c392c7fd7aee269bc07b7f0b4
+  ThirdPartAccount: c32f12861720b422ac4e023ba95778212b946daa
+  UICategory: 2d963cf14716a2dec1d3d26c526909018a841b00
   UIImage-Resize: fc57263eed2cd98f74e5ba4848bedae979a0bdf0
-  WeChatSDK: 42b21a8af08c75b41f67066084893f28982431e4
+  WeChatSDK: e9dd2b6d48d825f26221669a3a1300fe0bef58e0
 
-COCOAPODS: 0.34.4
+COCOAPODS: 0.36.0

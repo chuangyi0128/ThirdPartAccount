@@ -32,7 +32,7 @@
 {
     self = [super initWithFrame:[[UIScreen mainScreen] bounds]];
     if (self) {
-        [self setBackgroundColor:[UIColor colorWithWhite:0.0f alpha:0.25f]];
+        [self setBackgroundColor:[UIColor colorWithWhite:0.4f alpha:0.65f]];
         [self setAutoresizesSubviews:NO];
         
         self.cellArray = [[NSMutableArray alloc] init];
