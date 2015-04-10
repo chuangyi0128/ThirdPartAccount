@@ -1,1 +1,1 @@
-../../../WeChatSDK/SDKExport/WXApiObject.h
+../../../WeChatSDK/WeChatSDK/WXApiObject.h

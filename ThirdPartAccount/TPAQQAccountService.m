@@ -115,6 +115,8 @@ static NSString *appId;
 {
     if (self.oauth.isSessionValid) {
         [self.oauth logout:self];
+        // QQSDK的Bug吗：logout之后oauth无法重新authorize
+        self.oauth = [[TencentOAuth alloc] initWithAppId:appId andDelegate:self];
     }
 }
 

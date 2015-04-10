@@ -1,6 +1,6 @@
 {
   "name": "ThirdPartAccount",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "summary": "ThirdPartAccount",
   "description": "ThirdPartAccount: QQ, Weibo, etc",
   "homepage": "https://github.com/chuangyi0128/ThirdPartAccount",
@@ -10,7 +10,7 @@
   },
   "source": {
     "git": "https://github.com/chuangyi0128/ThirdPartAccount.git",
-    "tag": "0.1.4"
+    "tag": "0.1.5"
   },
   "platforms": {
     "ios": "5.0"
@@ -21,13 +21,13 @@
   "frameworks": "MessageUI",
   "dependencies": {
     "QQSDK": [
-
+      "~> 2.8.1"
     ],
     "WeChatSDK": [
-
+      "~> 1.5.0"
     ],
     "SinaWeiboSDK": [
-
+      "~> 3.0.0"
     ],
     "UIImage-Resize": [
 

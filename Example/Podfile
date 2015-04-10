@@ -4,10 +4,8 @@ source 'https://github.com/chuangyi0128/SLPodsRepo.git'
 
 target 'ThirdPartAccount', :exclusive => true do
   pod "ThirdPartAccount", :path => "../"
-  pod 'QQSDK'
 end
 
 target 'Tests', :exclusive => true do
   pod "ThirdPartAccount", :path => "../"
-  pod 'QQSDK'
 end
