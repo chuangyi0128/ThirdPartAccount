@@ -1,1 +1,0 @@
-../../../SinaWeiboSDK/SinaWeiboSDK/WBHttpRequest+WeiboUser.h

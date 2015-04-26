@@ -1,6 +1,6 @@
 #include "Pods-ThirdPartAccount-WeChatSDK.xcconfig"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Private" "${PODS_ROOT}/Headers/Private/WeChatSDK" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/ERActionSheet" "${PODS_ROOT}/Headers/Public/QQSDK" "${PODS_ROOT}/Headers/Public/SinaWeiboSDK" "${PODS_ROOT}/Headers/Public/ThirdPartAccount" "${PODS_ROOT}/Headers/Public/UICategory" "${PODS_ROOT}/Headers/Public/UIImage-Resize" "${PODS_ROOT}/Headers/Public/WeChatSDK"
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Private" "${PODS_ROOT}/Headers/Private/WeChatSDK" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/ERActionSheet" "${PODS_ROOT}/Headers/Public/QQSDK" "${PODS_ROOT}/Headers/Public/ThirdPartAccount" "${PODS_ROOT}/Headers/Public/UICategory" "${PODS_ROOT}/Headers/Public/UIImage-Resize" "${PODS_ROOT}/Headers/Public/WeChatSDK" "${PODS_ROOT}/Headers/Public/WeiboSDK"
 LIBRARY_SEARCH_PATHS = ${PODS_THIRDPARTACCOUNT_WECHATSDK_LIBRARY_SEARCH_PATHS}
 OTHER_LDFLAGS = ${PODS_THIRDPARTACCOUNT_WECHATSDK_OTHER_LDFLAGS} -ObjC
 PODS_ROOT = ${SRCROOT}
