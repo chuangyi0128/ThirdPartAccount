@@ -9,7 +9,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "ThirdPartAccount"
-  s.version          = "0.1.5"
+  s.version          = "0.1.6"
   s.summary          = "ThirdPartAccount"
   s.description      = "ThirdPartAccount: QQ, Weibo, etc"
   s.homepage         = "https://github.com/chuangyi0128/ThirdPartAccount"
@@ -26,7 +26,7 @@ Pod::Spec.new do |s|
 
   s.dependency 'QQSDK', '~> 2.8.1'
   s.dependency 'WeChatSDK', '~> 1.5.0'
-  s.dependency 'SinaWeiboSDK', '~> 3.0.0'
+  s.dependency 'WeiboSDK', '~> 3.0.0'
 
   s.dependency 'UIImage-Resize'
   s.dependency 'ERActionSheet'
