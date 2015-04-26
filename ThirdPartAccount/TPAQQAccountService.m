@@ -31,7 +31,7 @@ static NSString *appId;
 
 
 @interface TPAQQAccountService () <TencentSessionDelegate>
-@property (nonatomic, assign) dispatch_queue_t taskQueue;
+@property (nonatomic, strong) dispatch_queue_t taskQueue;
 @property (nonatomic, strong) TencentOAuth *oauth;
 @property (nonatomic, strong) NSArray *permissionsArray;
 @end

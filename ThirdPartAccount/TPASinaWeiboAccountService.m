@@ -31,7 +31,7 @@ static NSString *redirectUrl = @"http://";
 
 
 @interface TPASinaWeiboAccountService () <WBHttpRequestDelegate>
-@property (nonatomic, assign) dispatch_queue_t taskQueue;
+@property (nonatomic, strong) dispatch_queue_t taskQueue;
 @end
 
 

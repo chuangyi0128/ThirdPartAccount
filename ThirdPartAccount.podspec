@@ -22,7 +22,7 @@ Pod::Spec.new do |s|
 
   s.source_files = 'ThirdPartAccount'
   s.resources = 'ThirdPartAccount/TPAAcoutSerivece.bundle'
-  s.frameworks = 'MessageUI'
+  s.frameworks = 'MessageUI', 'ImageIO'
 
   s.dependency 'QQSDK', '~> 2.8.1'
   s.dependency 'WeChatSDK', '~> 1.5.0'

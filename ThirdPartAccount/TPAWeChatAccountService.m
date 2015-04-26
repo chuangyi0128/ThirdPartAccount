@@ -40,7 +40,7 @@ static NSString *secret;
 
 
 @interface TPAWeChatAccountService ()
-@property (nonatomic, assign) dispatch_queue_t taskQueue;
+@property (nonatomic, strong) dispatch_queue_t taskQueue;
 @property (nonatomic, copy) NSString *authCode; // Auth后返回的code
 @end
 
