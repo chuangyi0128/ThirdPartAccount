@@ -1,0 +1,37 @@
+{
+  "name": "QQSDK",
+  "version": "2.8.2",
+  "summary": "QQ SDK",
+  "description": "QQ SDK arm64",
+  "homepage": "https://github.com/chuangyi0128/QQSDK",
+  "license": "MIT",
+  "authors": {
+    "SongLi": "chuangyi0128@gmail.com"
+  },
+  "source": {
+    "git": "https://github.com/chuangyi0128/QQSDK.git",
+    "tag": "2.8.2"
+  },
+  "platforms": {
+    "ios": "5.0"
+  },
+  "requires_arc": true,
+  "source_files": "QQSDK/TencentOpenAPI.framework/Headers",
+  "resources": "QQSDK/TencentOpenApi_IOS_Bundle.bundle",
+  "vendored_frameworks": "QQSDK/TencentOpenAPI.framework",
+  "libraries": [
+    "stdc++",
+    "z",
+    "sqlite3",
+    "iconv"
+  ],
+  "frameworks": [
+    "Security",
+    "SystemConfiguration",
+    "CoreGraphics",
+    "CoreTelephony"
+  ],
+  "xcconfig": {
+    "OTHER_LDFLAGS": "-fobjc-arc"
+  }
+}

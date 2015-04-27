@@ -2,7 +2,7 @@
   "name": "ThirdPartAccount",
   "version": "0.1.6",
   "summary": "ThirdPartAccount",
-  "description": "ThirdPartAccount: QQ, Weibo, etc",
+  "description": "ThirdPartAccount: QQ, WeChat, Weibo, etc",
   "homepage": "https://github.com/chuangyi0128/ThirdPartAccount",
   "license": "MIT",
   "authors": {
@@ -18,19 +18,16 @@
   "requires_arc": true,
   "source_files": "ThirdPartAccount",
   "resources": "ThirdPartAccount/TPAAcoutSerivece.bundle",
-  "frameworks": [
-    "MessageUI",
-    "ImageIO"
-  ],
+  "frameworks": "MessageUI",
   "dependencies": {
     "QQSDK": [
-      "~> 2.8.1"
+
     ],
     "WeChatSDK": [
-      "~> 1.5.0"
+      "~> 1.5.1"
     ],
     "WeiboSDK": [
-      "~> 3.0.0"
+      "~> 3.0.2"
     ],
     "UIImage-Resize": [
 

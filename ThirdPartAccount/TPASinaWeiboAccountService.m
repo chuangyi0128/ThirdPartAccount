@@ -89,7 +89,7 @@ static NSString *redirectUrl = @"http://";
 
 - (BOOL)isAuthEnable
 {
-    return YES;
+    return (appKey.length > 0);
 }
 
 - (BOOL)isAuthorized
@@ -149,7 +149,7 @@ static NSString *redirectUrl = @"http://";
 
 - (BOOL)isShareEnable
 {
-    return YES;
+    return (appKey.length > 0);
 }
 
 - (void)shareToWeiboWithImage:(UIImage *)image url:(NSString *)urlStr content:(NSString *)content

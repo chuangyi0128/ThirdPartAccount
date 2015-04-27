@@ -99,7 +99,7 @@ static NSString *secret;
 
 - (BOOL)isAuthEnable
 {
-    return YES;
+    return (appId.length > 0 && secret.length > 0);
 }
 
 - (BOOL)isAuthorized
@@ -182,7 +182,7 @@ static NSString *secret;
 
 - (BOOL)isShareEnable
 {
-    return [WXApi isWXAppSupportApi] && [WXApi isWXAppInstalled];
+    return (appId.length > 0) && [WXApi isWXAppSupportApi] && [WXApi isWXAppInstalled];
 }
 
 - (void)shareToWeChatFriendsWithURL:(NSString *)urlStr title:(NSString *)title description:(NSString *)desc previewImage:(UIImage *)prevImage

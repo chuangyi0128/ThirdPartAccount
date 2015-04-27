@@ -9,6 +9,7 @@
 #import "TPAQQAccountService.h"
 #import "TencentOAuth.h"
 #import "QQApiInterface.h"
+#import "TencentMessageObject.h"
 #import "UIImage+Resize.h"
 #import "UIImage+Crop.h"
 
@@ -30,7 +31,7 @@ NSString * const TPAQQAccountUserAvatarLinkKey = @"avatarLink";
 static NSString *appId;
 
 
-@interface TPAQQAccountService () <TencentSessionDelegate>
+@interface TPAQQAccountService () /*<TencentSessionDelegate>*/
 @property (nonatomic, strong) dispatch_queue_t taskQueue;
 @property (nonatomic, strong) TencentOAuth *oauth;
 @property (nonatomic, strong) NSArray *permissionsArray;
@@ -94,7 +95,7 @@ static NSString *appId;
 
 - (BOOL)isAuthEnable
 {
-    return YES;
+    return (appId.length > 0);
 }
 
 - (BOOL)isAuthorized
@@ -130,11 +131,11 @@ static NSString *appId;
 
 - (BOOL)isShareEnable
 {
-    return YES;
+    return (appId.length > 0);
 }
 
 - (void)shareToFriendsWithURL:(NSString *)urlStr title:(NSString *)title description:(NSString *)desc previewImage:(UIImage *)prevImage
-{
+{/*
     dispatch_async(self.taskQueue, ^{
         SendMessageToQQReq *reqest = [self requestWithURL:urlStr title:title description:desc previewImage:prevImage];
         if (reqest) {
@@ -143,11 +144,11 @@ static NSString *appId;
                 [self proceedShareResult:code];
             });
         }
-    });
+    });*/
 }
 
 - (void)shareToFriendsWithImage:(UIImage *)image title:(NSString *)title description:(NSString *)desc
-{
+{/*
     dispatch_async(self.taskQueue, ^{
         SendMessageToQQReq *reqest = [self requestWithImage:image title:title description:desc];
         if (reqest) {
@@ -156,11 +157,11 @@ static NSString *appId;
                 [self proceedShareResult:code];
             });
         }
-    });
+    });*/
 }
 
 - (void)shareToQZoneWithURL:(NSString *)urlStr title:(NSString *)title description:(NSString *)desc previewImage:(UIImage *)prevImage
-{
+{/*
     dispatch_async(self.taskQueue, ^{
         SendMessageToQQReq *reqest = [self requestWithURL:urlStr title:title description:desc previewImage:prevImage];
         if (reqest) {
@@ -169,11 +170,11 @@ static NSString *appId;
                 [self proceedShareResult:code];
             });
         }
-    });
+    });*/
 }
 
 - (void)shareToQZoneWithImage:(UIImage *)image title:(NSString *)title description:(NSString *)desc
-{
+{/*
     dispatch_async(self.taskQueue, ^{
         SendMessageToQQReq *reqest = [self requestWithImage:image title:title description:desc];
         if (reqest) {
@@ -182,7 +183,7 @@ static NSString *appId;
                 [self proceedShareResult:code];
             });
         }
-    });
+    });*/
 }
 
 
@@ -201,7 +202,7 @@ static NSString *appId;
     _nickName = nil;
     _avatarLink = nil;
 }
-
+/*
 - (SendMessageToQQReq *)requestWithURL:(NSString *)urlStr title:(NSString *)title description:(NSString *)desc previewImage:(UIImage *)prevImage
 {
     if (urlStr.length == 0) {
@@ -268,7 +269,7 @@ static NSString *appId;
     
     return [SendMessageToQQReq reqWithContent:msgObject];
 }
-
+*/
 - (void)proceedShareResult:(QQApiSendResultCode)code
 {
     NSString *resultDesc = nil;
