@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "C3D4B49EAA23D8E0B5DA818838330D5E92CB2783",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "74CC60D6CFD4387222E62C531CED4B9DD1DD5DF7" : 0,
+    "C3D4B49EAA23D8E0B5DA818838330D5E92CB2783" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "514EF91C-0A22-41BC-A9E4-C5AE607D7839",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "74CC60D6CFD4387222E62C531CED4B9DD1DD5DF7" : "QQSDK",
+    "C3D4B49EAA23D8E0B5DA818838330D5E92CB2783" : "ThirdPartAccount"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "ThirdPartAccount",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Example\/ThirdPartAccount.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/chuangyi0128\/QQSDK.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "74CC60D6CFD4387222E62C531CED4B9DD1DD5DF7"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/chuangyi0128\/ThirdPartAccount.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "C3D4B49EAA23D8E0B5DA818838330D5E92CB2783"
+    }
+  ]
+}
